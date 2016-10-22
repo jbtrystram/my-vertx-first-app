@@ -39,13 +39,42 @@ public class MyFirstVerticle extends AbstractVerticle {
     // Create a router object.
     Router router = Router.router(vertx);
 
-    // Bind "/" to our hello message.
+    // Routes for Grafana simple JSON source (https://github.com/grafana/simple-json-datasource)
+
+    // / should respond with 200 OK.
     router.route("/").handler(routingContext -> {
       HttpServerResponse response = routingContext.response();
       response
-          .putHeader("content-type", "text/html")
-          .end("<h1>Hello from my first Vert.x 3 application</h1>");
+              .setStatusCode(200)
+              .end("Hello");
     });
+
+    // /search used by the find metric options on the query tab in panels.
+    router.route("/search").handler(routingContext -> {
+        HttpServerResponse response = routingContext.response();
+        response
+                .setStatusCode(200)
+                .end("Hello");
+    });
+
+
+    // /query should return metrics based on input.
+    router.route("/query").handler(routingContext -> {
+      HttpServerResponse response = routingContext.response();
+      response
+              .setStatusCode(200)
+              .end("Hello");
+    });
+
+
+    // /annotations should return annotations.
+    router.route("/annotations").handler(routingContext -> {
+      HttpServerResponse response = routingContext.response();
+      response
+              .setStatusCode(200)
+              .end("Hello");
+    });
+
 
     router.route("/assets/*").handler(StaticHandler.create("assets"));
 
